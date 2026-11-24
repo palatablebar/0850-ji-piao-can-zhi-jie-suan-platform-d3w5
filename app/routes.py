@@ -1,10 +1,10 @@
-from flask import Blueprint, abort, jsonify, request, send_file
+from flask import Blueprint, jsonify, request, send_file
 
 from app.catalog import SPEC
 from app.config import SAMPLES
 from app.errors import DomainIssue
 from app.evidence.render import render
-from app.review.service import approve, create_run, serialize
+from app.review.service import approve, create_run, serialize, supplement
 from app.service import pipeline
 
 
@@ -62,6 +62,15 @@ def review(run_id):
     return jsonify(approve(store(), run_id, data["decision"], data.get("comment", ""), int(data["expected_revision"])))
 
 
+@api.post("/api/runs/<run_id>/supplements")
+def add_supplement(run_id):
+    data = request.get_json(silent=True) or {}
+    if "expected_revision" not in data:
+        raise DomainIssue("BAD_REQUEST")
+    run, conflicts = supplement(store(), run_id, data, int(data["expected_revision"]))
+    return jsonify(run=run, conflicts=conflicts)
+
+
 @api.get("/api/runs/<run_id>/evidence")
 def evidence(run_id):
     run = serialize(store().get(run_id))
@@ -71,5 +80,5 @@ def evidence(run_id):
 @api.get("/api/examples/<profile>")
 def example(profile):
     if profile not in {"clean", "dirty"}:
-        abort(404)
+        raise DomainIssue("SAMPLE_UNKNOWN", 404)
     return send_file(SAMPLES / f"{profile}.csv", as_attachment=True)

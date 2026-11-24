@@ -10,6 +10,7 @@ MESSAGES = {
     "TOO_MANY_ROWS": "数据行超过上限",
     "FILE_TOO_LARGE": "文件超过大小上限",
     "KEY_MISSING": "主键为空",
+    "ORDER_MISSING": "团单号为空",
     "CONFLICT_DUPLICATE": "同一键存在冲突内容",
     "SAMPLE_UNKNOWN": "样例不存在",
     "STAGE_UNKNOWN": "阶段不存在",
@@ -18,6 +19,15 @@ MESSAGES = {
     "GATE_BLOCKED": "存在阻断项，不能签发",
     "NOT_APPROVED": "批次尚未签发",
     "BAD_REQUEST": "请求内容不完整",
+    "BAD_DIRECTION": "票款方向不在允许集合内",
+    "BAD_CAP": "票款上限不能为负",
+    "EVIDENCE_DIRECTION": "逐票凭据方向与票方向不一致",
+    "EVIDENCE_OVER_CAP": "逐票凭据超过该票上限",
+    "NET_DIRECTION": "净额方向与团单方向冲突",
+    "NET_UNBALANCED": "净额在各票方向与上限内无法配平",
+    "NET_INCONSISTENT": "同团净额不一致",
+    "ORDER_MIX": "同一批次混入多个团单",
+    "SIGNED_AMOUNT_MISMATCH": "后补凭据与已签款对不上，余款暂缓",
 }
 
 

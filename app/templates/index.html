@@ -10,14 +10,23 @@
   </section>
   <section class="board">
     <article class="panel" id="panel-table">
-      <div class="panel-head"><h2>批次结果</h2><span class="hint" id="row-count">--</span></div>
+      <div class="panel-head"><h2>逐票结算结果</h2><span class="hint" id="row-count">--</span></div>
       <div class="table-wrap">
         <table><thead id="row-head"></thead><tbody id="row-body"></tbody></table>
       </div>
     </article>
     <article class="panel" id="panel-chart">
-      <div class="panel-head"><h2>指标分布</h2><span class="hint" id="chart-label"></span></div>
+      <div class="panel-head"><h2>应结金额分布</h2><span class="hint" id="chart-label"></span></div>
       <div id="chart" class="chart"></div>
+    </article>
+    <article class="panel" id="panel-signing">
+      <div class="panel-head"><h2>每张票的签发结果</h2><span class="hint" id="signing-count">--</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>票号</th><th>结论</th><th>依据</th><th class="num">应结分</th><th class="num">已签分</th><th>状态</th></tr></thead>
+          <tbody id="signing-body"></tbody>
+        </table>
+      </div>
     </article>
     <article class="panel" id="panel-issues">
       <div class="panel-head"><h2>异常与隔离</h2><span class="hint" id="issue-count">--</span></div>
@@ -28,13 +37,16 @@
       <div class="ledger" id="ledger-list"></div>
     </article>
     <article class="panel" id="panel-review">
-      <div class="panel-head"><h2>批次复核</h2><span class="hint" id="revision">rev 0</span></div>
+      <div class="panel-head"><h2>批次复核与后补凭据</h2><span class="hint" id="revision">rev 0</span></div>
       <div class="review">
         <label for="comment">复核意见</label>
-        <textarea id="comment" placeholder="核验来源、边界与批次结论"></textarea>
+        <textarea id="comment" placeholder="核验净额拆票、方向上限与逐票结论"></textarea>
+        <label for="supplement">后补逐票凭据（JSON，如 {"T2": -300}）</label>
+        <textarea id="supplement" placeholder='{"票号": 有符号金额（分）}'></textarea>
         <div class="review-actions">
           <button id="sign" type="button" disabled>签发</button>
           <button id="hold" type="button" disabled>暂缓</button>
+          <button id="add-evidence" type="button" disabled>提交后补凭据</button>
           <a id="download" href="#" download hidden>下载复核证据</a>
         </div>
       </div>
